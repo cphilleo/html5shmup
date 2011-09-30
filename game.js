@@ -75,7 +75,7 @@ var render = function() {
 	ctx.textBaseline = "top";
 	ctx.fillText("Score: " + g_score, 5,5);
 	
-	g_SpritesheetManager.getSheet('explosion').drawFrame(3, 100, 100);
+	//g_SpritesheetManager.getSheet('explosion').drawFrame(3, 100, 100);
 }
 
 loadImages();

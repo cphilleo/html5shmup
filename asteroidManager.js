@@ -11,9 +11,12 @@ var asteroidManager = {
 			
 			this.asteroids[this.asteroids.length] = {
 				x: (Math.random() * 640) - 55,
-				y: -53, speed: (Math.random() * (this.maxSpeed - this.minSpeed)) + this.minSpeed,
+				y: -53,
+				speed: (Math.random() * (this.maxSpeed - this.minSpeed)) + this.minSpeed,
 				rotation: Math.random() * (2 * Math.PI),
-				rotationSpeed: (Math.random() * (this.maxRotation - this.minRotation)) + this.minRotation
+				rotationSpeed: (Math.random() * (this.maxRotation - this.minRotation)) + this.minRotation,
+				width: 55,
+				height: 53
 			};
 		}
 	},
@@ -21,12 +24,20 @@ var asteroidManager = {
 		for (var i = 0; i < this.asteroids.length; i++) {
 			var asteroid = this.asteroids[i];
 			
-			if (x1 >= asteroid.x && x1 <= asteroid.x + 55 && y1 >= asteroid.y && y1 <= asteroid.y + 53) {
+			var minX = asteroid.x - asteroid.width / 2;
+			var maxX = asteroid.x + asteroid.width / 2;
+			var minY = asteroid.y - asteroid.height / 2;
+			var maxY = asteroid.y + asteroid.height / 2;
+			
+			//if ((x1 >= asteroid.x && x1 <= asteroid.x + 55 && y1 >= asteroid.y && y1 <= asteroid.y + 53) ||
+			//		(x2 >= asteroid.x && x2 <= asteroid.x + 55 && y2 >= asteroid.y && y2 <= asteroid.y + 53))
+			if ((x1 < maxX) && (x2 > minX) && (y1 < maxY) && (y2 > minY)) {
 				this.asteroids.splice(i, 1);
 				g_score += 100;
 				return true;
 			}
 		}
+		
 		return false;
 	},
 	update: function(delta) {
@@ -61,6 +72,22 @@ var asteroidManager = {
 				ctx.rotate(asteroid.rotation);
 				ctx.drawImage(images[0], 0, 243, 55, 53, -28, -27, 55, 53);
 			ctx.restore();
+			
+			var minX = asteroid.x - asteroid.width / 2;
+			var maxX = asteroid.x + asteroid.width / 2;
+			var minY = asteroid.y - asteroid.height / 2;
+			var maxY = asteroid.y + asteroid.height / 2;
+			
+			ctx.beginPath();
+				ctx.moveTo(minX, minY);
+				ctx.lineTo(maxX, minY);
+				ctx.lineTo(maxX, maxY);
+				ctx.lineTo(minX, maxY);
+				ctx.lineTo(minX, minY);
+				
+				ctx.strokeStyle = 'rgb(255,0,0)';
+				ctx.stroke();
+			ctx.closePath();
 		}
 	}
 }
