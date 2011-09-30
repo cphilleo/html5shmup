@@ -20,10 +20,10 @@ var asteroidManager = {
 		for (var i = 0; i < this.asteroids.length; i++) {
 			var asteroid = this.asteroids[i];
 			
-			var minX = asteroid.x;// - asteroid.width / 2;
-			var maxX = asteroid.x + asteroid.width;// / 2;
-			var minY = asteroid.y;// - asteroid.height / 2;
-			var maxY = asteroid.y + asteroid.height;// / 2;
+			var minX = asteroid.x;
+			var maxX = asteroid.x + asteroid.width;
+			var minY = asteroid.y;
+			var maxY = asteroid.y + asteroid.height;
 			
 			if ((x1 < maxX) && (x2 > minX) && (y1 < maxY) && (y2 > minY)) {
 				this.asteroids.splice(i, 1);
