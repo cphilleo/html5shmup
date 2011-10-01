@@ -6,13 +6,12 @@ var asteroidManager = {
 	maxRotation: 2,
 	newAsteroidTimer: Math.random() * 200,
 	addAsteroid: function() {
-		var x = (Math.random() * canvas.width) - 55;
-		var y = -53;
-		var speed = (Math.random() * (this.maxSpeed - this.minSpeed)) + this.minSpeed;
-		var rot = Math.random() * (2 * Math.PI);
-		var rotSpeed = (Math.random() * (this.maxRotation - this.minRotation)) + this.minRotation;
+		var pos = new Point(Random.nextInt(0, canvas.width - 55), -53);
+		var speed = Random.nextFloat(this.minSpeed, this.maxSpeed);
+		var rot = Random.nextFloat(2 * Math.PI);
+		var rotSpeed = Random.nextFloat(this.minRotation, this.maxRotation);
 		
-		var asteroid = new Asteroid(x, y, rot, speed, rotSpeed);
+		var asteroid = new Asteroid(pos, rot, speed, rotSpeed);
 		
 		this.asteroids.push(asteroid);
 	},
@@ -20,12 +19,10 @@ var asteroidManager = {
 		for (var i = 0; i < this.asteroids.length; i++) {
 			var asteroid = this.asteroids[i];
 			
-			var minX = asteroid.x;
-			var maxX = asteroid.x + asteroid.width;
-			var minY = asteroid.y;
-			var maxY = asteroid.y + asteroid.height;
+			var testRect = new Rect(x1, y1, x2 - x1, y2 - y1);
+			var asteroidRect = asteroid.getBoundingBox();
 			
-			if ((x1 < maxX) && (x2 > minX) && (y1 < maxY) && (y2 > minY)) {
+			if (BoundingBox.checkCollision(testRect, asteroidRect)) {
 				this.asteroids.splice(i, 1);
 				g_score += 100;
 				return true;

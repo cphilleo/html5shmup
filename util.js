@@ -1,5 +1,5 @@
 var Random = {
-	randomInt: function() {
+	nextInt: function() {
 		if (arguments.length == 1) {
 			var max = arguments[0];
 			return Math.floor(Math.random() * (max + 1));
@@ -16,7 +16,7 @@ var Random = {
 		}
 	},
 	
-	randomFloat: function() {
+	nextFloat: function() {
 		if (arguments.length == 0) {
 			return Math.random();
 		}

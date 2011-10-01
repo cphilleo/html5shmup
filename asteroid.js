@@ -1,6 +1,5 @@
-var Asteroid = function(x, y, rot, speed, rotSpeed) {
-	this.x = x;
-	this.y = y;
+var Asteroid = function(pos, rot, speed, rotSpeed) {
+	this.pos = pos;
 	this.rot = rot;
 	this.speed = speed;
 	this.rotSpeed = rotSpeed;
@@ -10,9 +9,9 @@ var Asteroid = function(x, y, rot, speed, rotSpeed) {
 }
 
 Asteroid.prototype.update = function(delta) {
-	this.y += this.speed * delta;
+	this.pos.y += this.speed * delta;
 	
-	if (this.y > canvas.height) {
+	if (this.pos.y > canvas.height) {
 		this.remove = true;
 	}
 	
@@ -25,15 +24,15 @@ Asteroid.prototype.update = function(delta) {
 
 Asteroid.prototype.render = function() {
 	ctx.save();
-		ctx.translate(this.x + (this.width / 2), this.y + (this.height / 2));
+		ctx.translate(this.pos.x + (this.width / 2), this.pos.y + (this.height / 2));
 		ctx.rotate(this.rot);
 		ctx.drawImage(images[0], 0, 243, 55, 53, -28, -27, 55, 53);
 	ctx.restore();
 	
-	var minX = this.x;
-	var maxX = this.x + this.width;
-	var minY = this.y;
-	var maxY = this.y + this.height;
+	var minX = this.pos.x;
+	var maxX = this.pos.x + this.width;
+	var minY = this.pos.y;
+	var maxY = this.pos.y + this.height;
 	
 	ctx.beginPath();
 		ctx.moveTo(minX, minY);
@@ -45,4 +44,8 @@ Asteroid.prototype.render = function() {
 		ctx.strokeStyle = 'rgb(255,0,0)';
 		ctx.stroke();
 	ctx.closePath();
+}
+
+Asteroid.prototype.getBoundingBox = function() {
+	return new Rect(this.pos.x, this.pos.y, this.width, this.height);
 }
