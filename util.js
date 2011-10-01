@@ -12,7 +12,7 @@ var Random = {
 		}
 		
 		else {
-			alert("Error: Random.randomInt() invalid arguments");
+			alert("Error: Random.nextInt() invalid arguments");
 		}
 	},
 	
@@ -33,7 +33,7 @@ var Random = {
 		}
 		
 		else {
-			alert("Error: Random.randomFloat() invalid arguments");
+			alert("Error: Random.nextFloat() invalid arguments");
 		}
 	}
 }

@@ -74,6 +74,8 @@ var render = function() {
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
 	ctx.fillText("Score: " + g_score, 5,5);
+	ctx.textAlign = "left";
+	ctx.fillText("FPS: " + g_fps, 5, 25);
 	
 	//g_SpritesheetManager.getSheet('explosion').drawFrame(3, 100, 100);
 }
@@ -88,6 +90,9 @@ function startGame() {
 
 var g_then;
 var g_score = 0;
+var g_frameCounter = 0;
+var g_fps = 0;
+var g_deltaCounter = 0;
 
 function main() {
 	var now = Date.now();
@@ -96,6 +101,14 @@ function main() {
 	update(delta / 1000);
 	clear();
 	render();
+	
+	g_frameCounter++;
+	g_deltaCounter += delta;
+	
+	if (g_deltaCounter >= 1000) {
+		g_fps = g_frameCounter;
+		g_frameCounter = g_deltaCounter = 0;
+	}
 	
 	g_then = now;
 };

@@ -7,11 +7,11 @@ var asteroidManager = {
 	newAsteroidTimer: Math.random() * 200,
 	addAsteroid: function() {
 		var pos = new Point(Random.nextInt(0, canvas.width - 55), -53);
-		var speed = Random.nextFloat(this.minSpeed, this.maxSpeed);
+		var velocity = new Vector(0, Random.nextFloat(this.minSpeed, this.maxSpeed));
 		var rot = Random.nextFloat(2 * Math.PI);
 		var rotSpeed = Random.nextFloat(this.minRotation, this.maxRotation);
 		
-		var asteroid = new Asteroid(pos, rot, speed, rotSpeed);
+		var asteroid = new Asteroid(pos, velocity, rot, rotSpeed);
 		
 		this.asteroids.push(asteroid);
 	},
@@ -44,7 +44,7 @@ var asteroidManager = {
 			
 			asteroid.update(delta);
 			
-			if (asteroid.remove) {
+			if (!asteroid.alive) {
 				this.asteroids.splice(i,1);
 			}
 		}
