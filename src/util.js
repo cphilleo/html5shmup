@@ -37,3 +37,12 @@ var Random = {
 		}
 	}
 }
+
+/* Array Utils */
+var range = function(start, end) {
+	var a = [];
+	for (var i = start; i <= end; i++) {
+		a.push(i);
+	}
+	return a;
+}

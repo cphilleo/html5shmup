@@ -25,6 +25,7 @@ var asteroidManager = {
 			if (BoundingBox.checkCollision(testRect, asteroidRect)) {
 				this.asteroids.splice(i, 1);
 				g_score += 100;
+				g_explosionManager.addExplosion(asteroid.pos.x, asteroid.pos.y);
 				return true;
 			}
 		}

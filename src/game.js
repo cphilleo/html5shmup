@@ -24,7 +24,7 @@ var KEY_UP = 38;
 var KEY_DOWN = 40;
 var KEY_SPACE = 32;
 
-var imageFiles = ['res/spaceshipsprites.gif', 'res/explosion.gif'];
+var imageFiles = ['res/spaceshipsprites.gif', 'res/explosion.gif', 'res/ship.gif'];
 var images = [];
 var imagesLoaded = 0;
 
@@ -46,15 +46,16 @@ function imageLoaded() {
 
 var setup = function() {
 	starfield.initialize();
-	g_SpritesheetManager.addSheet('explosion', new Spritesheet(images[1], 0, 0, 53, 49));
+	g_explosionManager = new ExplosionManager();
+	g_ship = new Ship();
 }
 
 var update = function(modifier) {
 	starfield.update(modifier);
-	ship.update(modifier);
+	g_ship.update(modifier);
 	bulletManager.update(modifier);
 	asteroidManager.update(modifier);
-	//explosion.update(modifier);
+	g_explosionManager.update(modifier);
 }
 
 var clear = function() {
@@ -64,9 +65,10 @@ var clear = function() {
 
 var render = function() {
 	starfield.render();
-	ship.render();
+	g_ship.render();
 	bulletManager.render();
 	asteroidManager.render();
+	g_explosionManager.render();
 	
 	//score
 	ctx.fillStyle = "rgb(250,250,250)";
@@ -76,8 +78,6 @@ var render = function() {
 	ctx.fillText("Score: " + g_score, 5,5);
 	ctx.textAlign = "left";
 	ctx.fillText("FPS: " + g_fps, 5, 25);
-	
-	//g_SpritesheetManager.getSheet('explosion').drawFrame(3, 100, 100);
 }
 
 loadImages();
