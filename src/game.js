@@ -24,7 +24,7 @@ var KEY_UP = 38;
 var KEY_DOWN = 40;
 var KEY_SPACE = 32;
 
-var imageFiles = ['spaceshipsprites.gif', 'explosion.gif'];
+var imageFiles = ['res/spaceshipsprites.gif', 'res/explosion.gif'];
 var images = [];
 var imagesLoaded = 0;
 
