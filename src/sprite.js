@@ -11,7 +11,7 @@ var Sprite = function(image, width, height) {
 	
 	//public methods
 	this.addAnimation = function(animation) {
-		_animations[animation.name] = animation;
+		_animations[animation.getName()] = animation;
 	}
 	
 	this.update = function(delta) {

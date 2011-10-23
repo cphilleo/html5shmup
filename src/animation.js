@@ -26,6 +26,10 @@ var Animation = function(name, speed, frames, loop) {
 			_speedCounter = 0;
 		}
 	}
+	
+	this.getName = function() {
+		return _name;
+	}
 
 	this.getCurrentFrame = function() {
 		return _frames[_frameCounter];
