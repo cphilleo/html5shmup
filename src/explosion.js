@@ -10,7 +10,7 @@ var Explosion = function(x, y) {
 Explosion.prototype.update = function(delta) {
 	this.sprite.update(delta);
 	
-	if (this.sprite.currentAnimation.hasEnded()) {
+	if (this.sprite.getCurrentAnimation().hasEnded()) {
 		this.alive = false;
 	}
 }

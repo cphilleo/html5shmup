@@ -1,37 +1,45 @@
 var Animation = function(name, speed, frames, loop) {
-	this.name = name;
-	this.speed = speed;
-	this.speedCounter = 0;
-	this.loop = loop || false;
-	this.frames = frames;
-	this.frameCounter = 0;
-}
-
-Animation.prototype.update = function(delta) {
-	this.speedCounter += delta;
+	//publc vars
 	
-	if (this.speedCounter > this.speed) {
-		if (this.frameCounter < this.frames.length - 1) {
-			this.frameCounter++;
-		}
-		else {
-			if (this.loop) {
-				this.frameCounter = 0;
-			}
-		}
+	//private vars
+	var _name = name;
+	var _speed = speed;
+	var _speedCounter = 0;
+	var _loop = loop || false;
+	var _frames = frames;
+	var _frameCounter = 0;
+	
+	//public methods
+	this.update = function(delta) {
+		_speedCounter += delta;
 		
-		this.speedCounter = 0;
+		if (_speedCounter > _speed) {
+			if (_frameCounter < _frames.length - 1) {
+				_frameCounter++;
+			}
+			else {
+				if (_loop) {
+					_frameCounter = 0;
+				}
+			}
+			
+			_speedCounter = 0;
+		}
 	}
-}
 
-Animation.prototype.getCurrentFrame = function() {
-	return this.frames[this.frameCounter];
-}
+	this.getCurrentFrame = function() {
+		return _frames[_frameCounter];
+	}
 
-Animation.prototype.reset = function() {
-	this.frameCounter = this.speedCounter = 0;
-}
-
-Animation.prototype.hasEnded = function() {
-	return this.frameCounter === this.frames.length - 1;
+	this.reset = function() {
+		_frameCounter = _speedCounter = 0;
+	}
+	
+	this.hasEnded = function() {
+		return _frameCounter === _frames.length - 1;
+	}
+	
+	//private methods
+	
+	//Initialization
 }

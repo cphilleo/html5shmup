@@ -1,50 +1,62 @@
 var Sprite = function(image, width, height) {
-	this.image = image;
-	this.width = width;
-	this.height = height;
-	this.animations = [];
-	this.isPlaying = true;
+	//public vars
 	
+	//private vars
+	var _image = image;
+	var _width = width;
+	var _height = height;
+	var _animations = [];
+	var _isPlaying = true;
+	var _currentAnimation = null;
+	
+	//public methods
+	this.addAnimation = function(animation) {
+		_animations[animation.name] = animation;
+	}
+	
+	this.update = function(delta) {
+		if (_isPlaying ) {
+			_currentAnimation.update(delta);
+		}
+	}
+	
+	this.playAnimation = function(name) {
+		_currentAnimation = _animations[name];
+		_currentAnimation.reset();
+		_isPlaying = true;
+	}
+	
+	this.stopAnimation = function() {
+		_isPlaying = false;
+	}
+	
+	this.getCurrentAnimation = function() {
+		return _currentAnimation;
+	}
+	
+	this.draw = function(x, y) {
+		var frame = _currentAnimation.getCurrentFrame();
+		var frameX = _width * frame;
+		var frameY = 0;
+	
+		ctx.drawImage(_image, frameX, frameY, _width, _height, x, y, _width, _height);
+	}
+	
+	this.drawRotated = function(x, y, rot) {
+		var frame = _currentAnimation.getCurrentFrame();
+		var frameX = _width * frame;
+		var frameY = 0;
+		
+		ctx.save();
+			ctx.translate(x + (_width / 2), y + (_height / 2));
+			ctx.rotate(rot);
+			ctx.drawImage(_image, frameX, frameY, _width, _height, _width / -2, _height / -2, _width, _height);
+		ctx.restore();
+	}
+	
+	//Private methods
+	
+	//Init
 	this.addAnimation(new Animation("default", 1, [0], true));
 	this.playAnimation("default");
-}
-
-Sprite.prototype.addAnimation = function(animation) {
-	this.animations[animation.name] = animation;
-}
-
-Sprite.prototype.update = function(delta) {
-	if (this.isPlaying ) {
-		this.currentAnimation.update(delta);
-	}
-}
-
-Sprite.prototype.playAnimation = function(name) {
-	this.currentAnimation = this.animations[name];
-	this.currentAnimation.reset();
-	this.isPlaying = true;
-}
-
-Sprite.prototype.stopAnimation = function() {
-	this.isPlaying = false;
-}
-
-Sprite.prototype.draw = function(x, y) {
-	var frame = this.currentAnimation.getCurrentFrame();
-	var frameX = this.width * frame;
-	var frameY = 0;
-	
-	ctx.drawImage(this.image, frameX, frameY, this.width, this.height, x, y, this.width, this.height);
-}
-
-Sprite.prototype.drawRotated = function(x, y, rot) {
-	var frame = this.currentAnimation.getCurrentFrame();
-	var frameX = this.width * frame;
-	var frameY = 0;
-	
-	ctx.save();
-		ctx.translate(this.pos.x + (this.width / 2), this.pos.y + (this.height / 2));
-		ctx.rotate(this.rot);
-		ctx.drawImage(this.image, frameX, frameY, this.width, this.height, this.width / -2, this.height / -2, this.width, this.height);
-	ctx.restore();
 }

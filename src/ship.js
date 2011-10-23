@@ -23,13 +23,13 @@ Ship.prototype.update = function(delta) {
 			this.x -= this.speed * delta;
 		}
 		
-		if (this.sprite.currentAnimation.name === "forward") {
+		if (this.sprite.getCurrentAnimation().name === "forward") {
 			this.sprite.playAnimation("left");
 		}
 	}
 	
 	else {
-		if (this.sprite.currentAnimation.name === "left") {
+		if (this.sprite.getCurrentAnimation().name === "left") {
 			this.sprite.playAnimation("forward");
 		}
 	}
@@ -39,13 +39,13 @@ Ship.prototype.update = function(delta) {
 			this.x += this.speed * delta;
 		}
 		
-		if (this.sprite.currentAnimation.name === "forward") {
+		if (this.sprite.getCurrentAnimation().name === "forward") {
 			this.sprite.playAnimation("right");
 		}
 	}
 	
 	else {
-		if (this.sprite.currentAnimation.name === "right") {
+		if (this.sprite.getCurrentAnimation().name === "right") {
 			this.sprite.playAnimation("forward");
 		}
 	}	

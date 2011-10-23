@@ -1,5 +1,4 @@
 //Globals
-var g_SpritesheetManager = new SpritesheetManager();
 
 //Create the canvas
 var canvas = document.getElementById('the-canvas');
