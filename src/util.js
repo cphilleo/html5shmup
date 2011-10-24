@@ -46,3 +46,8 @@ var range = function(start, end) {
 	}
 	return a;
 }
+
+// Color Utils 
+var makeRGB = function(r, g, b) {
+	return "rgb(" + r + ", " + g + ", " + b + ")";
+}

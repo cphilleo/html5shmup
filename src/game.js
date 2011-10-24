@@ -1,4 +1,5 @@
 //Globals
+g_debug = false;
 
 //Create the canvas
 var canvas = document.getElementById('the-canvas');

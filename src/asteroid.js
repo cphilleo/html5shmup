@@ -29,25 +29,17 @@ Asteroid.prototype.render = function() {
 		ctx.drawImage(images[0], 0, 243, 55, 53, -28, -27, 55, 53);
 	ctx.restore();
 	
-	/*
-	var minX = this.pos.x;
-	var maxX = this.pos.x + this.width;
-	var minY = this.pos.y;
-	var maxY = this.pos.y + this.height;
-	
-	ctx.beginPath();
-		ctx.moveTo(minX, minY);
-		ctx.lineTo(maxX, minY);
-		ctx.lineTo(maxX, maxY);
-		ctx.lineTo(minX, maxY);
-		ctx.lineTo(minX, minY);
+	if (g_debug) {
+		var box = this.getBoundingBox();
 		
-		ctx.strokeStyle = 'rgb(255,0,0)';
-		ctx.stroke();
-	ctx.closePath();
-	*/
+		ctx.strokeStyle = makeRGB(255, 0, 0);
+		ctx.strokeRect(box.x, box.y, box.width, box.height);
+	}
 }
 
 Asteroid.prototype.getBoundingBox = function() {
-	return new Rect(this.pos.x, this.pos.y, this.width, this.height);
+	var scale = 0.1;
+	var scaleX = this.width * scale;
+	var scaleY = this.height * scale;
+	return new Rect(this.pos.x + scaleX, this.pos.y + scaleY, this.width - scaleX * 2, this.height - scaleY * 2);
 }

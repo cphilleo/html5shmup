@@ -14,6 +14,14 @@ var Ship = function() {
 	//public methods
 	this.render = function() {
 		_sprite.draw(_x, _y);
+		
+		if (g_debug) {
+			//draw bounding box
+			var box = getBoundingBox();
+			
+			ctx.strokeStyle = makeRGB(255, 0, 0);
+			ctx.strokeRect(box.x, box.y, box.width, box.height);
+		}
 	}
 	
 	this.update = function(delta) {
@@ -21,7 +29,9 @@ var Ship = function() {
 		_shotTimer -= delta;
 		
 		//collisions
-		if (asteroidManager.checkCollision(_x, _y, _x + _width, _y + _height)) {
+		var box = getBoundingBox();
+		
+		if (asteroidManager.checkCollision(box.x, box.y, box.x + box.width, box.y + box.height)) {
 			g_explosionManager.addExplosion(_x, _y);
 			g_score = 0;
 			_x = (640 / 2) - 20;
@@ -88,7 +98,10 @@ var Ship = function() {
 	
 	//private methods
 	var getBoundingBox = function() {
-		
+		var scale = 0.25;
+		var scaleX = _width * scale;
+		var scaleY = _height * scale;
+		return new Rect(_x + scaleX, _y + scaleY, _width - scaleX * 2, _height - scaleY * 2);
 	}
 	
 	//Initialization
