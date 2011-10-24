@@ -16,10 +16,11 @@ var asteroidManager = {
 		this.asteroids.push(asteroid);
 	},
 	checkCollision: function(x1, y1, x2, y2) {
+		var testRect = new Rect(x1, y1, x2 - x1, y2 - y1);
+
 		for (var i = 0; i < this.asteroids.length; i++) {
 			var asteroid = this.asteroids[i];
 			
-			var testRect = new Rect(x1, y1, x2 - x1, y2 - y1);
 			var asteroidRect = asteroid.getBoundingBox();
 			
 			if (BoundingBox.checkCollision(testRect, asteroidRect)) {
