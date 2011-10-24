@@ -3,14 +3,14 @@ var Explosion = function(x, y) {
 	this.y = y;
 	this.alive = true;
 	this.sprite = new Sprite(images[1], 53, 49);
-	this.sprite.addAnimation(new Animation("exploding", 0.08, range(0,5), false));
+	this.sprite.addAnimation({name: "exploding", speed: 0.04, frames: range(0,5), loop: false});
 	this.sprite.playAnimation("exploding");
 }
 
 Explosion.prototype.update = function(delta) {
 	this.sprite.update(delta);
 	
-	if (this.sprite.getCurrentAnimation().hasEnded()) {
+	if (this.sprite.hasAnimationEnded()) {
 		this.alive = false;
 	}
 }

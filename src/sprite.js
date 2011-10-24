@@ -8,21 +8,37 @@ var Sprite = function(image, width, height) {
 	var _animations = [];
 	var _isPlaying = true;
 	var _currentAnimation = null;
+	var _speedCounter = 0;
+	var _frameCounter = 0;
 	
 	//public methods
 	this.addAnimation = function(animation) {
-		_animations[animation.getName()] = animation;
+		_animations[animation.name] = animation;
 	}
 	
 	this.update = function(delta) {
 		if (_isPlaying ) {
-			_currentAnimation.update(delta);
+			
+			_speedCounter += delta;
+		
+			if (_speedCounter > _currentAnimation.speed) {
+				if (_frameCounter < _currentAnimation.frames.length - 1) {
+					_frameCounter++;
+				}
+				else {
+					if (_currentAnimation.loop) {
+						_frameCounter = 0;
+					}
+				}
+				
+				_speedCounter = 0;
+			}
 		}
 	}
 	
 	this.playAnimation = function(name) {
 		_currentAnimation = _animations[name];
-		_currentAnimation.reset();
+		this.resetAnimation();
 		_isPlaying = true;
 	}
 	
@@ -30,12 +46,16 @@ var Sprite = function(image, width, height) {
 		_isPlaying = false;
 	}
 	
-	this.getCurrentAnimation = function() {
-		return _currentAnimation;
+	this.resetAnimation = function() {
+		_frameCounter = _speedCounter = 0;
+	}
+	
+	this.hasAnimationEnded = function() {
+		return _frameCounter === _currentAnimation.frames.length - 1;
 	}
 	
 	this.draw = function(x, y) {
-		var frame = _currentAnimation.getCurrentFrame();
+		var frame = _currentAnimation.frames[_frameCounter];
 		var frameX = _width * frame;
 		var frameY = 0;
 	
@@ -43,7 +63,7 @@ var Sprite = function(image, width, height) {
 	}
 	
 	this.drawRotated = function(x, y, rot) {
-		var frame = _currentAnimation.getCurrentFrame();
+		var frame = _currentAnimation.frames[_frameCounter];
 		var frameX = _width * frame;
 		var frameY = 0;
 		
@@ -57,6 +77,6 @@ var Sprite = function(image, width, height) {
 	//Private methods
 	
 	//Init
-	this.addAnimation(new Animation("default", 1, [0], true));
+	this.addAnimation({name: "default", speed: 1, frames: [0], loop: true});
 	this.playAnimation("default");
 }

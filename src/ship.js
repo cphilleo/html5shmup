@@ -3,10 +3,11 @@ var Ship = function() {
 	this.y = 480 - 50;
 	this.speed = 250;
 	this.shotTimer = 0;
+	this.state = "forward";
 	this.sprite = new Sprite(images[2], 39, 43);
-	this.sprite.addAnimation(new Animation("forward", 0.1, [1,2], true));
-	this.sprite.addAnimation(new Animation("left", 0.1, [4,5], true));
-	this.sprite.addAnimation(new Animation("right", 0.1, [7,8], true));
+	this.sprite.addAnimation({name: "forward", speed: 0.1, frames: [1,2], loop: true});
+	this.sprite.addAnimation({name: "left", speed: 0.1, frames: [4,5], loop: true});
+	this.sprite.addAnimation({name: "right", speed: 0.1, frames: [7,8], loop: true});
 	this.sprite.playAnimation("forward");
 }
 
@@ -23,14 +24,16 @@ Ship.prototype.update = function(delta) {
 			this.x -= this.speed * delta;
 		}
 		
-		if (this.sprite.getCurrentAnimation().name === "forward") {
+		if (this.state === "forward") {
 			this.sprite.playAnimation("left");
+			this.state = "left";
 		}
 	}
 	
 	else {
-		if (this.sprite.getCurrentAnimation().name === "left") {
+		if (this.state === "left") {
 			this.sprite.playAnimation("forward");
+			this.state = "forward";
 		}
 	}
 	
@@ -39,14 +42,16 @@ Ship.prototype.update = function(delta) {
 			this.x += this.speed * delta;
 		}
 		
-		if (this.sprite.getCurrentAnimation().name === "forward") {
+		if (this.state === "forward") {
 			this.sprite.playAnimation("right");
+			this.state = "right";
 		}
 	}
 	
 	else {
-		if (this.sprite.getCurrentAnimation().name === "right") {
+		if (this.state === "right") {
 			this.sprite.playAnimation("forward");
+			this.state = "forward"
 		}
 	}	
 	
